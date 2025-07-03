@@ -1,0 +1,23 @@
+- Add the zustand package if not exists by using (npm install zustand)
+
+- Create a store/ directory under src/.
+
+- Create store files based on the use case of the feature or component.
+
+- Use the following boilerplate to get started:
+Example:
+  import { create } from 'zustand'
+  type State = {
+    // define state properties
+  }
+  type Actions = {
+    // define action functions
+  }
+  type <storeType> = State & Actions
+  const <storeName> = create<<storeType>>((set, get) => ({
+    // --- State ---
+    // --- Actions ---
+  }))
+  export default <storeName>
+
+- Always create stores under store/

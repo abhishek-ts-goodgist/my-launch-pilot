@@ -1,0 +1,58 @@
+- These are the list of shadcn supported components as per their v4 version. (Accordion, Alert, Alert Dialog, Aspect Ratio, Avatar, Badge, Breadcrumb, Button, Calendar, Card, Carousel, Chart, Checkbox, Collapsible, Combobox, Command, Context Menu, Data Table, Date Picker, Dialog, Drawer, Dropdown Menu, React Hook Form, Hover Card, Input, Input OTP, Label, Menubar, Navigation Menu, Pagination, Popover, Progress, Radio Group, Resizable, Scroll-area, Select, Separator, Sheet, Sidebar, Skeleton, Slider, Sonner, Switch, Table, Tabs, Textarea, Toast, Toggle, Toggle Group, Tooltip, Typography
+)
+- Below are the commands to install them
+
+npx shadcn add accordion
+npx shadcn add alert
+npx shadcn add alert-dialog
+npx shadcn add aspect-ratio
+npx shadcn add avatar
+npx shadcn add badge
+npx shadcn add breadcrumb
+npx shadcn add button
+npx shadcn add calendar
+npx shadcn add card
+npx shadcn add carousel
+npx shadcn add chart
+npx shadcn add checkbox
+npx shadcn add collapsible
+npx shadcn add combobox
+npx shadcn add command
+npx shadcn add context-menu
+npx shadcn add data-table
+npx shadcn add date-picker
+npx shadcn add dialog
+npx shadcn add drawer
+npx shadcn add dropdown-menu
+npx shadcn add hover-card
+npx shadcn add input
+npx shadcn add input-otp
+npx shadcn add label
+npx shadcn add menubar
+npx shadcn add navigation-menu
+npx shadcn add pagination
+npx shadcn add popover
+npx shadcn add progress
+npx shadcn add radio-group
+npx shadcn add resizable
+npx shadcn add scroll-area
+npx shadcn add select
+npx shadcn add separator
+npx shadcn add sheet
+npx shadcn add sidebar
+npx shadcn add skeleton
+npx shadcn add slider
+npx shadcn add sonner
+npx shadcn add switch
+npx shadcn add table
+npx shadcn add tabs
+npx shadcn add textarea
+npx shadcn add toast
+npx shadcn add toggle
+npx shadcn add toggle-group
+npx shadcn add tooltip
+
+
+
+
+

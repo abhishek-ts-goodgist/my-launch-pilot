@@ -1,0 +1,25 @@
+1. Use the existing Typography component from src/components/ui for any typography-related elements while generating components.
+
+2. All ShadCN UI components must be placed under src/components/ui.
+
+3. All application-specific components (non-ShadCN) should be placed under src/components/app, organized by feature or purpose.
+
+4. Structure directories under components/app based on functionality — e.g.:
+
+    4.1. Place sidebar-related components in components/app/sidebar
+
+    4.2. Place authentication-related components in components/app/auth
+
+5. Enforce PascalCase for all component names, file names, and folder names, except for shadcn components which are added automatically via the CLI and are excluded from this rule.
+
+6. Avoid inline styles unless they are dynamic or context-dependent; use Tailwind CSS classes for styling consistency.
+
+7. Always define prop types or interfaces explicitly for clarity and maintainability.
+
+8. Avoid using the any type — instead, use unknown with type narrowing or proper type annotations.
+
+9. Design components to be reusable and self-contained.
+
+10. Split components into smaller subcomponents if they exceed 100–150 lines of code.
+
+11. Prefer function declarations with explicitly typed props for better type inference and readability.

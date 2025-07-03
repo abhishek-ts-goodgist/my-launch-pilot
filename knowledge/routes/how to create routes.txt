@@ -1,0 +1,40 @@
+1. Create a routes directory to organize and contain the application's route definitions in a separate file.
+
+2. The routes file should include and return all the app routes in a structured manner.
+
+3. Import and use this routes file in App.tsx, simply to inform the App component about the available routes — keeping route logic cleanly separated from the main application structure.
+
+4. ✅ Zustand Store Must Exist — Mandatory Check
+  4.1.0. DO NOT PROCEED unless both of the following are confirmed:
+    4.1.1. The zustand package is installed in package.json.
+    4.1.2. A store directory exists under src/ .
+  4.2.0. ✅ If both exist, Zustand is considered configured.
+  4.3.0. ❌ If either is missing, you must refer to how to setup zustand.txt and complete the setup before proceeding.
+
+5. 📁 Create the Protected Route Component
+  5.1.0. Once Zustand setup is confirmed, create a new file for the protected route component.
+
+6. 📌 Use the Following Boilerplate (Strict)
+  6.1.1. Implement the component using the exact code below:
+  Example:
+  interface Props {
+    children: React.ReactNode;
+  }
+
+  export default function <ProtectedRouteComponentName>({ children }: Props) {
+    const { isLoggedIn } = useLoginStore();
+    const location = useLocation();
+
+    if (!isLoggedIn) {
+      return <Navigate to="/login" replace state={{ from: location }} />;
+    }
+
+    return <>{children}</>;
+  }
+
+7. Wrap all post-login routes with ProtectedRoute.
+  Example:
+  <ProtectedRoute>
+    {/* Declare your post-login route component here */}
+    <SomeComponent />
+  </ProtectedRoute>

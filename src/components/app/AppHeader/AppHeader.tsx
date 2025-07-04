@@ -297,7 +297,7 @@ export function Header() {
             </Button>
             <Avatar className="w-7 h-7">
               <AvatarImage src="/placeholder.svg?height=28&width=28" />
-              {(isLoggedIn && user?.email) ? (
+              {isLoggedIn && user?.email ? (
                 <AvatarFallback className="text-xs">
                   {getInitials(user.email)}
                 </AvatarFallback>

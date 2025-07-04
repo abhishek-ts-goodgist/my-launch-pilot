@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,35 +11,46 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Send, ChevronDown, User, FileText, Database, Layout, Cloud } from "lucide-react"
+} from "@/components/ui/dropdown-menu";
+import {
+  Send,
+  ChevronDown,
+  User,
+  FileText,
+  Database,
+  Layout,
+  Cloud,
+} from "lucide-react";
 
 interface Agent {
-  name: string
-  icon: any
-  color: string
-  bgColor: string
+  name: string;
+  icon: any;
+  color: string;
+  bgColor: string;
 }
 
 interface ChatMessage {
-  id: number
-  type: "user" | "assistant"
-  message: string
-  timestamp: string
-  isGenerating?: boolean
+  id: number;
+  type: "user" | "assistant";
+  message: string;
+  timestamp: string;
+  isGenerating?: boolean;
 }
 
 // Add selectedAgent to the props interface and pass it up to parent
 interface ChatSidebarProps {
-  selectedAgent: string
-  onAgentChange: (agent: string) => void
+  selectedAgent: string;
+  onAgentChange: (agent: string) => void;
 }
 
 // Update the component signature
-export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) {
-  const TEXTBOX_MAX_VARIABLE_HEIGHT = 300
-  const [currentMessage, setCurrentMessage] = useState("")
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+export function ChatSidebar({
+  selectedAgent,
+  onAgentChange,
+}: ChatSidebarProps) {
+  const TEXTBOX_MAX_VARIABLE_HEIGHT = 300;
+  const [currentMessage, setCurrentMessage] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Mock data for agents
   const agents: Record<string, Agent> = {
@@ -67,14 +78,15 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
       color: "text-orange-600",
       bgColor: "bg-orange-100",
     },
-  }
+  };
 
   // Mock data for chat history
   const chatHistory: ChatMessage[] = [
     {
       id: 1,
       type: "user",
-      message: "I want to build a social media dashboard that shows analytics from multiple platforms",
+      message:
+        "I want to build a social media dashboard that shows analytics from multiple platforms",
       timestamp: "10:30 AM",
     },
     {
@@ -87,7 +99,8 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
     {
       id: 3,
       type: "user",
-      message: "I want to integrate with Twitter, Instagram, Facebook, and LinkedIn",
+      message:
+        "I want to integrate with Twitter, Instagram, Facebook, and LinkedIn",
       timestamp: "10:32 AM",
     },
     {
@@ -98,33 +111,36 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
       timestamp: "10:33 AM",
       isGenerating: false,
     },
-  ]
+  ];
 
-  const currentAgent = agents[selectedAgent]
+  const currentAgent = agents[selectedAgent];
 
   // Auto-resize textarea function
   const adjustTextareaHeight = () => {
-    const textarea = textareaRef.current
+    const textarea = textareaRef.current;
     if (textarea) {
       // Reset height to auto to get the correct scrollHeight
-      textarea.style.height = "auto"
+      textarea.style.height = "auto";
 
       // Calculate the new height
-      const newHeight = Math.min(textarea.scrollHeight, TEXTBOX_MAX_VARIABLE_HEIGHT) // Max height of TEXTBOX_MAX_VARIABLE_HEIGHT
-      textarea.style.height = `${newHeight}px`
+      const newHeight = Math.min(
+        textarea.scrollHeight,
+        TEXTBOX_MAX_VARIABLE_HEIGHT
+      ); // Max height of TEXTBOX_MAX_VARIABLE_HEIGHT
+      textarea.style.height = `${newHeight}px`;
     }
-  }
+  };
 
   // Handle textarea input
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCurrentMessage(e.target.value)
-    adjustTextareaHeight()
-  }
+    setCurrentMessage(e.target.value);
+    adjustTextareaHeight();
+  };
 
   // Adjust height on mount and when content changes
   useEffect(() => {
-    adjustTextareaHeight()
-  }, [currentMessage])
+    adjustTextareaHeight();
+  }, [currentMessage]);
 
   return (
     <aside className="bg-white border-r flex flex-col h-full">
@@ -132,7 +148,11 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
       <div className="p-4 border-b flex-shrink-0">
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-semibold text-gray-900">AI Agents</h2>
-          <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700 hover:bg-red-50">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+          >
             Reset
           </Button>
         </div>
@@ -140,9 +160,14 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
         {/* Agent Selection */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="w-full justify-between bg-transparent">
+            <Button
+              variant="outline"
+              className="w-full justify-between bg-transparent"
+            >
               <div className="flex items-center">
-                <currentAgent.icon className={`w-4 h-4 mr-2 ${currentAgent.color}`} />
+                <currentAgent.icon
+                  className={`w-4 h-4 mr-2 ${currentAgent.color}`}
+                />
                 {currentAgent.name}
               </div>
               <ChevronDown className="w-4 h-4" />
@@ -152,9 +177,15 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
             <DropdownMenuLabel>Select AI Agent</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {Object.entries(agents).map(([key, agent]) => (
-              <DropdownMenuItem key={key} onClick={() => onAgentChange(key)} className="p-3">
+              <DropdownMenuItem
+                key={key}
+                onClick={() => onAgentChange(key)}
+                className="p-3"
+              >
                 <div className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${agent.bgColor}`}>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${agent.bgColor}`}
+                  >
                     <agent.icon className={`w-4 h-4 ${agent.color}`} />
                   </div>
                   <div className="font-medium">{agent.name}</div>
@@ -170,7 +201,9 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
         {chatHistory.map((message) => (
           <div
             key={message.id}
-            className={`flex items-start space-x-3 ${message.type === "user" ? "flex-row-reverse space-x-reverse" : ""}`}
+            className={`flex items-start space-x-3 ${
+              message.type === "user" ? "flex-row-reverse space-x-reverse" : ""
+            }`}
           >
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
@@ -180,13 +213,21 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
               {message.type === "user" ? (
                 <User className="w-4 h-4 text-blue-600" />
               ) : (
-                <currentAgent.icon className={`w-4 h-4 ${currentAgent.color}`} />
+                <currentAgent.icon
+                  className={`w-4 h-4 ${currentAgent.color}`}
+                />
               )}
             </div>
-            <div className={`flex-1 ${message.type === "user" ? "text-right" : ""}`}>
+            <div
+              className={`flex-1 ${
+                message.type === "user" ? "text-right" : ""
+              }`}
+            >
               <div
                 className={`inline-block p-3 rounded-lg max-w-[85%] ${
-                  message.type === "user" ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-900"
+                  message.type === "user"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-900"
                 }`}
               >
                 <p className="text-sm whitespace-pre-wrap">{message.message}</p>
@@ -211,7 +252,7 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault()
+                e.preventDefault();
                 // Handle send message
               }
             }}
@@ -222,7 +263,9 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
               Press Enter to send, Shift+Enter for new line
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-gray-500">{currentMessage.length}/2000</span>
+              <span className="text-[10px] text-gray-500">
+                {currentMessage.length}/2000
+              </span>
               <Button
                 size="sm"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 h-8 w-8 ml-1 p-0 flex-shrink-0"
@@ -236,5 +279,5 @@ export function ChatSidebar({ selectedAgent, onAgentChange }: ChatSidebarProps) 
         </div>
       </div>
     </aside>
-  )
+  );
 }

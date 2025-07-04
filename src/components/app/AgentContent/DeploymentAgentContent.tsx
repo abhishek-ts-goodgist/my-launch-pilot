@@ -1,65 +1,117 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { Cloud, Server, Globe, Shield, CheckCircle, AlertCircle, Clock } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  Cloud,
+  Server,
+  Globe,
+  Shield,
+  CheckCircle,
+  AlertCircle,
+  Clock,
+} from "lucide-react";
 
 export function DeploymentAgentContent() {
   const deploymentSteps = [
-    { name: "Environment Setup", status: "pending", progress: 0, description: "Configure production environment" },
-    { name: "Database Migration", status: "pending", progress: 0, description: "Set up production database" },
-    { name: "Frontend Build", status: "pending", progress: 0, description: "Build and optimize React app" },
-    { name: "Backend Deployment", status: "pending", progress: 0, description: "Deploy Python API server" },
-    { name: "Domain & SSL", status: "pending", progress: 0, description: "Configure domain and SSL certificate" },
-  ]
+    {
+      name: "Environment Setup",
+      status: "pending",
+      progress: 0,
+      description: "Configure production environment",
+    },
+    {
+      name: "Database Migration",
+      status: "pending",
+      progress: 0,
+      description: "Set up production database",
+    },
+    {
+      name: "Frontend Build",
+      status: "pending",
+      progress: 0,
+      description: "Build and optimize React app",
+    },
+    {
+      name: "Backend Deployment",
+      status: "pending",
+      progress: 0,
+      description: "Deploy Python API server",
+    },
+    {
+      name: "Domain & SSL",
+      status: "pending",
+      progress: 0,
+      description: "Configure domain and SSL certificate",
+    },
+  ];
 
   const environments = [
-    { name: "Development", url: "localhost:3000", status: "active", lastDeploy: "2 hours ago" },
-    { name: "Staging", url: "staging.myapp.com", status: "inactive", lastDeploy: "Never" },
-    { name: "Production", url: "myapp.com", status: "inactive", lastDeploy: "Never" },
-  ]
+    {
+      name: "Development",
+      url: "localhost:3000",
+      status: "active",
+      lastDeploy: "2 hours ago",
+    },
+    {
+      name: "Staging",
+      url: "staging.myapp.com",
+      status: "inactive",
+      lastDeploy: "Never",
+    },
+    {
+      name: "Production",
+      url: "myapp.com",
+      status: "inactive",
+      lastDeploy: "Never",
+    },
+  ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "text-green-600 bg-green-100"
+        return "text-green-600 bg-green-100";
       case "in-progress":
-        return "text-blue-600 bg-blue-100"
+        return "text-blue-600 bg-blue-100";
       case "pending":
-        return "text-gray-400 bg-gray-100"
+        return "text-gray-400 bg-gray-100";
       case "active":
-        return "text-green-600 bg-green-100"
+        return "text-green-600 bg-green-100";
       case "inactive":
-        return "text-gray-400 bg-gray-100"
+        return "text-gray-400 bg-gray-100";
       default:
-        return "text-gray-600 bg-gray-50"
+        return "text-gray-600 bg-gray-50";
     }
-  }
+  };
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return CheckCircle
+        return CheckCircle;
       case "in-progress":
-        return Clock
+        return Clock;
       case "pending":
-        return AlertCircle
+        return AlertCircle;
       case "active":
-        return CheckCircle
+        return CheckCircle;
       case "inactive":
-        return AlertCircle
+        return AlertCircle;
       default:
-        return Cloud
+        return Cloud;
     }
-  }
+  };
 
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Deployment & Infrastructure</h1>
-          <p className="text-gray-600">Deploy your application to production environments</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Deployment & Infrastructure
+          </h1>
+          <p className="text-gray-600">
+            Deploy your application to production environments
+          </p>
         </div>
         <div className="flex items-center space-x-2">
           <Button variant="outline">
@@ -84,11 +136,13 @@ export function DeploymentAgentContent() {
         <CardContent>
           <div className="space-y-4">
             {deploymentSteps.map((step, index) => {
-              const StatusIcon = getStatusIcon(step.status)
+              const StatusIcon = getStatusIcon(step.status);
               return (
                 <div key={index} className="flex items-center space-x-4">
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center ${getStatusColor(step.status)}`}
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${getStatusColor(
+                      step.status
+                    )}`}
                   >
                     <StatusIcon className="w-4 h-4" />
                   </div>
@@ -99,15 +153,19 @@ export function DeploymentAgentContent() {
                         {step.status === "completed"
                           ? "Complete"
                           : step.status === "in-progress"
-                            ? "In Progress"
-                            : "Pending"}
+                          ? "In Progress"
+                          : "Pending"}
                       </Badge>
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">{step.description}</p>
-                    {step.status === "in-progress" && <Progress value={step.progress} className="h-1" />}
+                    <p className="text-sm text-gray-600 mb-2">
+                      {step.description}
+                    </p>
+                    {step.status === "in-progress" && (
+                      <Progress value={step.progress} className="h-1" />
+                    )}
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
         </CardContent>
@@ -124,12 +182,17 @@ export function DeploymentAgentContent() {
         <CardContent>
           <div className="space-y-3">
             {environments.map((env, index) => {
-              const StatusIcon = getStatusIcon(env.status)
+              const StatusIcon = getStatusIcon(env.status);
               return (
-                <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-4 border rounded-lg"
+                >
                   <div className="flex items-center space-x-4">
                     <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center ${getStatusColor(env.status)}`}
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${getStatusColor(
+                        env.status
+                      )}`}
                     >
                       <StatusIcon className="w-4 h-4" />
                     </div>
@@ -139,13 +202,17 @@ export function DeploymentAgentContent() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <Badge variant={env.status === "active" ? "default" : "outline"}>
+                    <Badge
+                      variant={env.status === "active" ? "default" : "outline"}
+                    >
                       {env.status === "active" ? "Active" : "Inactive"}
                     </Badge>
-                    <div className="text-xs text-gray-500 mt-1">Last deploy: {env.lastDeploy}</div>
+                    <div className="text-xs text-gray-500 mt-1">
+                      Last deploy: {env.lastDeploy}
+                    </div>
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
         </CardContent>
@@ -212,5 +279,5 @@ export function DeploymentAgentContent() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

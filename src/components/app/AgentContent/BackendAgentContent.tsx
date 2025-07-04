@@ -1,9 +1,14 @@
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Database,
   Server,
@@ -17,22 +22,24 @@ import {
   ChevronDown,
   Copy,
   Download,
-} from "lucide-react"
+} from "lucide-react";
 
 interface FileNode {
-  name: string
-  type: "file" | "folder"
-  path: string
-  children?: FileNode[]
-  status?: "completed" | "in-progress" | "pending"
-  content?: string
-  language?: string
+  name: string;
+  type: "file" | "folder";
+  path: string;
+  children?: FileNode[];
+  status?: "completed" | "in-progress" | "pending";
+  content?: string;
+  language?: string;
 }
 
 export function BackendAgentContent() {
-  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set(["app", "app/routers", "app/models"]))
-  const [selectedFile, setSelectedFile] = useState<FileNode | null>(null)
-  const [showCodeDialog, setShowCodeDialog] = useState(false)
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(
+    new Set(["app", "app/routers", "app/models"])
+  );
+  const [selectedFile, setSelectedFile] = useState<FileNode | null>(null);
+  const [showCodeDialog, setShowCodeDialog] = useState(false);
 
   const projectStructure: FileNode[] = [
     {
@@ -466,49 +473,49 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
         },
       ],
     },
-  ]
+  ];
 
   const toggleFolder = (path: string) => {
-    const newExpanded = new Set(expandedFolders)
+    const newExpanded = new Set(expandedFolders);
     if (newExpanded.has(path)) {
-      newExpanded.delete(path)
+      newExpanded.delete(path);
     } else {
-      newExpanded.add(path)
+      newExpanded.add(path);
     }
-    setExpandedFolders(newExpanded)
-  }
+    setExpandedFolders(newExpanded);
+  };
 
   const handleFileClick = (file: FileNode) => {
     if (file.type === "file" && file.content) {
-      setSelectedFile(file)
-      setShowCodeDialog(true)
+      setSelectedFile(file);
+      setShowCodeDialog(true);
     }
-  }
+  };
 
   const getStatusColor = (status?: string) => {
     switch (status) {
       case "completed":
-        return "text-green-600"
+        return "text-green-600";
       case "in-progress":
-        return "text-blue-600"
+        return "text-blue-600";
       case "pending":
-        return "text-gray-400"
+        return "text-gray-400";
       default:
-        return "text-gray-600"
+        return "text-gray-600";
     }
-  }
+  };
 
   const getFileIcon = (file: FileNode) => {
     if (file.type === "folder") {
-      return expandedFolders.has(file.path) ? FolderOpen : Folder
+      return expandedFolders.has(file.path) ? FolderOpen : Folder;
     }
-    return FileText
-  }
+    return FileText;
+  };
 
   const renderFileTree = (nodes: FileNode[], depth = 0) => {
     return nodes.map((node) => {
-      const Icon = getFileIcon(node)
-      const isExpanded = expandedFolders.has(node.path)
+      const Icon = getFileIcon(node);
+      const isExpanded = expandedFolders.has(node.path);
 
       return (
         <div key={node.path}>
@@ -517,7 +524,11 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
               depth > 0 ? `ml-${depth * 4}` : ""
             }`}
             style={{ paddingLeft: `${depth * 16 + 8}px` }}
-            onClick={() => (node.type === "folder" ? toggleFolder(node.path) : handleFileClick(node))}
+            onClick={() =>
+              node.type === "folder"
+                ? toggleFolder(node.path)
+                : handleFileClick(node)
+            }
           >
             {node.type === "folder" && (
               <div className="w-4 h-4 flex items-center justify-center">
@@ -530,7 +541,9 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
             )}
             <Icon className={`w-4 h-4 ${getStatusColor(node.status)}`} />
             <span
-              className={`text-sm ${getStatusColor(node.status)} ${node.type === "file" ? "hover:text-blue-600" : ""}`}
+              className={`text-sm ${getStatusColor(node.status)} ${
+                node.type === "file" ? "hover:text-blue-600" : ""
+              }`}
             >
               {node.name}
             </span>
@@ -541,11 +554,15 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
                   node.status === "completed"
                     ? "border-green-200 text-green-700"
                     : node.status === "in-progress"
-                      ? "border-blue-200 text-blue-700"
-                      : "border-gray-200 text-gray-500"
+                    ? "border-blue-200 text-blue-700"
+                    : "border-gray-200 text-gray-500"
                 }`}
               >
-                {node.status === "completed" ? "✓" : node.status === "in-progress" ? "⏳" : "⏸"}
+                {node.status === "completed"
+                  ? "✓"
+                  : node.status === "in-progress"
+                  ? "⏳"
+                  : "⏸"}
               </Badge>
             )}
           </div>
@@ -553,21 +570,25 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
             <div>{renderFileTree(node.children, depth + 1)}</div>
           )}
         </div>
-      )
-    })
-  }
+      );
+    });
+  };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text)
-  }
+    navigator.clipboard.writeText(text);
+  };
 
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Backend Development</h1>
-          <p className="text-gray-600">Python FastAPI project structure and implementation</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Backend Development
+          </h1>
+          <p className="text-gray-600">
+            Python FastAPI project structure and implementation
+          </p>
         </div>
         <div className="flex items-center space-x-2">
           <Button variant="outline">
@@ -627,7 +648,12 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
                     status: "in-progress",
                     description: "Dashboard analytics",
                   },
-                  { method: "POST", path: "/api/v1/posts/schedule", status: "pending", description: "Schedule posts" },
+                  {
+                    method: "POST",
+                    path: "/api/v1/posts/schedule",
+                    status: "pending",
+                    description: "Schedule posts",
+                  },
                   {
                     method: "GET",
                     path: "/api/v1/platforms/status",
@@ -635,30 +661,39 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
                     description: "Platform status",
                   },
                 ].map((endpoint, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div className="flex items-center space-x-4">
                       <Badge
-                        className={`${endpoint.method === "GET" ? "bg-green-100 text-green-700" : "bg-blue-100 text-blue-700"}`}
+                        className={`${
+                          endpoint.method === "GET"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-blue-100 text-blue-700"
+                        }`}
                       >
                         {endpoint.method}
                       </Badge>
                       <code className="text-sm font-mono">{endpoint.path}</code>
-                      <span className="text-sm text-gray-600">{endpoint.description}</span>
+                      <span className="text-sm text-gray-600">
+                        {endpoint.description}
+                      </span>
                     </div>
                     <Badge
                       variant={
                         endpoint.status === "completed"
                           ? "default"
                           : endpoint.status === "in-progress"
-                            ? "secondary"
-                            : "outline"
+                          ? "secondary"
+                          : "outline"
                       }
                     >
                       {endpoint.status === "completed"
                         ? "Ready"
                         : endpoint.status === "in-progress"
-                          ? "Building"
-                          : "Pending"}
+                        ? "Building"
+                        : "Pending"}
                     </Badge>
                   </div>
                 ))}
@@ -678,40 +713,62 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
             <CardContent>
               <div className="space-y-3">
                 {[
-                  { name: "users", status: "completed", columns: 8, description: "User accounts and profiles" },
+                  {
+                    name: "users",
+                    status: "completed",
+                    columns: 8,
+                    description: "User accounts and profiles",
+                  },
                   {
                     name: "social_accounts",
                     status: "completed",
                     columns: 6,
                     description: "Connected social media accounts",
                   },
-                  { name: "posts", status: "in-progress", columns: 12, description: "Scheduled and published posts" },
-                  { name: "analytics", status: "pending", columns: 15, description: "Analytics and metrics data" },
+                  {
+                    name: "posts",
+                    status: "in-progress",
+                    columns: 12,
+                    description: "Scheduled and published posts",
+                  },
+                  {
+                    name: "analytics",
+                    status: "pending",
+                    columns: 15,
+                    description: "Analytics and metrics data",
+                  },
                 ].map((table, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-4 border rounded-lg"
+                  >
                     <div className="flex items-center space-x-4">
                       <Database className="w-4 h-4 text-green-600" />
                       <div>
                         <div className="font-medium">{table.name}</div>
-                        <div className="text-sm text-gray-500">{table.description}</div>
+                        <div className="text-sm text-gray-500">
+                          {table.description}
+                        </div>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-500">{table.columns} columns</span>
+                      <span className="text-sm text-gray-500">
+                        {table.columns} columns
+                      </span>
                       <Badge
                         variant={
                           table.status === "completed"
                             ? "default"
                             : table.status === "in-progress"
-                              ? "secondary"
-                              : "outline"
+                            ? "secondary"
+                            : "outline"
                         }
                       >
                         {table.status === "completed"
                           ? "Created"
                           : table.status === "in-progress"
-                            ? "Building"
-                            : "Pending"}
+                          ? "Building"
+                          : "Pending"}
                       </Badge>
                     </div>
                   </div>
@@ -731,7 +788,10 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
                 <FileText className="w-5 h-5" />
                 <span>{selectedFile?.path}</span>
                 {selectedFile?.status && (
-                  <Badge variant="outline" className={getStatusColor(selectedFile.status)}>
+                  <Badge
+                    variant="outline"
+                    className={getStatusColor(selectedFile.status)}
+                  >
                     {selectedFile.status}
                   </Badge>
                 )}
@@ -740,7 +800,10 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => selectedFile?.content && copyToClipboard(selectedFile.content)}
+                  onClick={() =>
+                    selectedFile?.content &&
+                    copyToClipboard(selectedFile.content)
+                  }
                 >
                   <Copy className="w-4 h-4 mr-1" />
                   Copy
@@ -760,5 +823,5 @@ Visit \`http://localhost:8000/docs\` for interactive API documentation.`,
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
